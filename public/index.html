@@ -287,22 +287,15 @@
           }
         },
         methods: {
-          async fetchCards() {
-            this.loading = true;
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            const newCards = Array.from({ length: 30 }, (_, i) => ({
-              id: this.cards.length + i + 1,
-              name: `Card ${this.cards.length + i + 1}`,
-              price: Math.random() * 100 + 1,
-              image: `https://picsum.photos/200/300?random=${this.cards.length + i + 1}`,
-              condition: this.conditions[Math.floor(Math.random() * this.conditions.length)],
-              language: this.languages[Math.floor(Math.random() * this.languages.length)]
-            }));
-            this.cards = [...this.cards, ...newCards];
-            this.applyFilters();
-            this.loading = false;
-          },
+		  async fetchCards() {
+			try {
+			  const response = await axios.get('articles.json');  // Chemin vers votre fichier JSON
+			  this.cards = response.data;  // Mettre à jour les articles dans l'application
+			  this.applyFilters();
+			} catch (error) {
+			  console.error('Erreur lors du chargement des articles :', error);
+			}
+		  },
           applyFilters() {
             let filteredCards = this.cards.filter(card => {
               if (this.filters.search && !card.name.toLowerCase().includes(this.filters.search.toLowerCase())) return false;

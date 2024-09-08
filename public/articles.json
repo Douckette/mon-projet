@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "Blue-Eyes White Dragon",
+    "price": 45.99,
+    "image": "images/#1129999#DIFO-FR071--0055654Article1129999Index198==1_NM.webp",
+    "condition": "Mint",
+    "language": "English"
+  },
+  {
+    "id": 2,
+    "name": "Dark Magician",
+    "price": 30.50,
+    "image": "#1130000#MP23-FR208--0055656Article1130000Index200==1_NM.webp",
+    "condition": "Near Mint",
+    "language": "Japanese"
+  }
+]
