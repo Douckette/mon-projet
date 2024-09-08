@@ -289,7 +289,7 @@
         methods: {
 		  async fetchCards() {
 			try {
-			  const response = await axios.get('articles.json');  // Chemin vers votre fichier JSON
+			  const response = await axios.get('/articles.json');  // Chemin vers votre fichier JSON
 			  this.cards = response.data;  // Mettre à jour les articles dans l'application
 			  this.applyFilters();
 			} catch (error) {
