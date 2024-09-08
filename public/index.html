@@ -220,11 +220,11 @@
 
         <div class="card-grid">
           <div v-for="card in displayedCards" :key="card.id" class="card-item">
-            <img :src="card.image" :alt="card.name" class="card-image">
-            <div class="card-info">
-              <div class="card-name">{{ card.name }}</div>
-              <div class="card-price">${{ card.price.toFixed(2) }}</div>
-              <button class="add-to-cart" @click="addToCart(card)">Add to Cart</button>
+			  <img :src="card.image_url" :alt="card.image_url" class="card-image">
+			  <div class="card-info">
+				<div class="card-name">{{ card.name }}</div>
+				<div class="card-price">${{ card.price.toFixed(2) }}</div>
+				<button class="add-to-cart" @click="addToCart(card)">Add to Cart</button>
             </div>
           </div>
         </div>
@@ -287,15 +287,15 @@
           }
         },
         methods: {
-		  async fetchCards() {
-			try {
-			  const response = await axios.get('/articles.json');  // Chemin vers votre fichier JSON
-			  this.cards = response.data;  // Mettre à jour les articles dans l'application
-			  this.applyFilters();
-			} catch (error) {
-			  console.error('Erreur lors du chargement des articles :', error);
-			}
-		  },
+			async fetchCards() {
+				try {
+				  const response = await axios.get('http://localhost:3000/api/articles');  // URL de l'API
+				  this.cards = response.data;  // Mise à jour des articles depuis l'API
+				  this.applyFilters();  // Appliquer les filtres sur les articles récupérés
+				} catch (error) {
+				  console.error('Erreur lors du chargement des articles :', error);
+				}
+			  },
           applyFilters() {
             let filteredCards = this.cards.filter(card => {
               if (this.filters.search && !card.name.toLowerCase().includes(this.filters.search.toLowerCase())) return false;
