@@ -289,7 +289,7 @@
         methods: {
 			async fetchCards() {
 				try {
-				  const response = await axios.get('http://90.26.8.58:8080/api/articles');  // URL de l'API
+				  const response = await axios.get('http://test/api/articles');  // URL de l'API
 				  this.cards = response.data;  // Mise à jour des articles depuis l'API
 				  this.applyFilters();  // Appliquer les filtres sur les articles récupérés
 				} catch (error) {
