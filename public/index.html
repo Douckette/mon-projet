@@ -286,25 +286,33 @@
             return this.cart.reduce((total, item) => total + item.price, 0);
           }
         },
-        methods: {
-			async fetchCards() {
-				try {
-				  const response = await axios.get('https://d872-45-10-155-34.ngrok-free.app/api/articles');  // URL de l'API
-				  this.cards = response.data;  // Mise à jour des articles depuis l'API
-				  this.applyFilters();  // Appliquer les filtres sur les articles récupérés
-				} catch (error) {
-				  console.error('Erreur lors du chargement des articles :', error);
+       methods: {
+		  async fetchCards() {
+			try {
+			  const response = await axios.get('https://7df8-90-26-8-58.ngrok-free.app/api/articles', {
+				headers: {
+				  'ngrok-skip-browser-warning': 'true'  // Ajout de l'en-tête pour contourner la page d'avertissement
 				}
-			  },
-          applyFilters() {
-            let filteredCards = this.cards.filter(card => {
-              if (this.filters.search && !card.name.toLowerCase().includes(this.filters.search.toLowerCase())) return false;
-              if (this.filters.minPrice && card.price < this.filters.minPrice) return false;
-              if (this.filters.maxPrice && card.price > this.filters.maxPrice) return false;
-              if (this.filters.conditions.length && !this.filters.conditions.includes(card.condition)) return false;
-              if (this.filters.languages.length && !this.filters.languages.includes(card.language)) return false;
-              return true;
-            });
+			  });
+			  
+			  console.log('Réponse API :', response.data);  // Ajouter cette ligne pour vérifier la réponse
+			  this.cards = response.data;  // Assurez-vous que la réponse est un tableau
+			  
+			  this.applyFilters();  // Appliquer les filtres après la récupération des données
+			} catch (error) {
+			  console.error('Erreur lors du chargement des articles :', error);
+			}
+		  },
+		  
+		  applyFilters() {
+			let filteredCards = this.cards.filter(card => {
+			  if (this.filters.search && !card.name.toLowerCase().includes(this.filters.search.toLowerCase())) return false;
+			  if (this.filters.minPrice && card.price < this.filters.minPrice) return false;
+			  if (this.filters.maxPrice && card.price > this.filters.maxPrice) return false;
+			  if (this.filters.conditions.length && !this.filters.conditions.includes(card.condition)) return false;
+			  if (this.filters.languages.length && !this.filters.languages.includes(card.language)) return false;
+			  return true;
+			});
 
             // Apply sorting
             switch (this.sortBy) {
