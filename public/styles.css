@@ -1,9 +1,178 @@
+/* Styles globaux */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
+  background-color: #f5f5f5; /* Arrière-plan gris clair */
   text-align: center;
-  padding: 50px;
+  margin: 0;
+  padding: 0;
 }
+
 h1 {
   color: #333;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+/* Section des produits (cartes) */
+.card-item {
+  width: 200px; /* Largeur des cartes */
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.card-image {
+  width: 100%;
+  height: 300px; /* Hauteur de l'image de l'article */
+  object-fit: cover; /* Gérer le recadrage de l'image pour qu'elle remplisse bien la zone */
+}
+
+.card-info {
+  padding: 1rem;
+  background-color: #f0f0f0; /* Arrière-plan de la zone d'informations */
+}
+
+.card-details {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.card-name {
+  background-color: #001f3f; /* Couleur de fond pour le nom */
+  color: white; /* Texte en blanc */
+  font-size: 0.9rem;
+  padding: 0.3rem;
+  flex: 1; /* Chaque bloc prend une largeur égale */
+  text-align: center;
+}
+
+.card-serial {
+  background-color: #0074D9; /* Couleur de fond pour le numéro de série */
+  color: white;
+  font-size: 0.9rem;
+  padding: 0.3rem;
+  flex: 1;
+  text-align: center;
+}
+
+.card-condition {
+  background-color: #39CCCC; /* Couleur de fond pour la condition */
+  color: white;
+  font-size: 0.9rem;
+  padding: 0.3rem;
+  flex: 1;
+  text-align: center;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.card-price {
+  font-size: 1.2rem;
+  color: #e74c3c; /* Couleur rouge pour le prix */
+  font-weight: bold;
+}
+
+.add-to-cart {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-to-cart:hover {
+  background-color: #2980b9; /* Couleur plus foncée au survol */
+}
+
+/* Sidebar du panier */
+.cart-sidebar {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 300px;
+  height: 100%;
+  background-color: white;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+  transition: right 0.3s;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.cart-sidebar.open {
+  right: 0;
+}
+
+.cart-header {
+  background-color: #333;
+  color: white;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-cart {
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.cart-items {
+  padding: 1rem;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.remove-from-cart {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.3rem 0.5rem;
+  cursor: pointer;
+}
+
+.cart-total {
+  font-weight: bold;
+  margin-top: 1rem;
+  text-align: right;
+}
+
+.cart-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.cart-action-btn {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cart-action-btn:hover {
+  background-color: #2980b9;
+}
+
+.loading {
+  text-align: center;
+  padding: 1rem;
 }
