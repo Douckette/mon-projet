@@ -397,7 +397,7 @@
         async fetchCards() {
           try {
             this.loading = true;
-            const response = await axios.get('http://localhost:3000/api/stockbrut');
+            const response = await axios.get(' https://cb01-85-190-234-244.ngrok-free.app/api/stockbrut');
             this.cards = response.data;
             this.applyFilters();
             this.loading = false;
@@ -502,7 +502,7 @@
 
     const cartItems = this.cart;
 
-    axios.post('http://localhost:3000/api/order', { cart: cartItems })
+    axios.post(' https://cb01-85-190-234-244.ngrok-free.app/api/order', { cart: cartItems })
       .then(response => {
         console.log('Commande enregistrée avec succès :', response);
         
