@@ -397,7 +397,12 @@
         async fetchCards() {
           try {
             this.loading = true;
-            const response = await axios.get(' https://cb01-85-190-234-244.ngrok-free.app/api/stockbrut');
+            const response = await axios.get(' https://cb01-85-190-234-244.ngrok-free.app/api/stockbrut', {
+				headers: {
+				  'ngrok-skip-browser-warning': 'true'  // Ajout de l'en-tête pour contourner la page d'avertissement
+				}
+			  }				
+			);
             this.cards = response.data;
             this.applyFilters();
             this.loading = false;
