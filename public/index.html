@@ -6,23 +6,31 @@
   <title>TCG Marketplace - Your Ultimate Trading Card Store</title>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <!-- Ajouter Font Awesome pour les icônes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
   <style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f5f5f5;
-      display: flex;
-      justify-content: center;
-    }
+	  font-family: Arial, sans-serif;
+	  margin: 0;
+	  padding: 0;
+	  background-color: #f5f5f5;
+	}
 
-    .container {
-      max-width: 100%;
-      margin: 0 auto;
-      padding: 1rem;
-      background-color: #fff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
+	.wrapper {
+	  display: flex;
+	  justify-content: center;
+	  width: 100%; /* Le wrapper prend toute la largeur */
+	}
+
+	.container {
+	  width: 100%;
+	  max-width: 1200px;
+	  padding: 1rem;
+	  background-color: #fff;
+	  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	  box-sizing: border-box;
+	}
 
     .header {
       background-color: #333;
@@ -32,9 +40,9 @@
       justify-content: space-between;
       align-items: center;
       height: 40px;
-      position: fixed;
-      width: 48%;
-      z-index: 1000;
+      /*position: fixed;	*/
+      width: 98%;
+      z-index: 1000;	  
     }
 
     .search-bar {
@@ -55,14 +63,14 @@
     }
 
     .filters-container {
-      display: flex;
+      display: none; 
       flex-wrap: wrap;
       justify-content: flex-start;
       align-items: center;
       background-color: white;
       padding: 10px;
       border-bottom: 1px solid #ddd;
-      margin-top: 80px;
+      margin-top: 40px;
     }
 
     .filter {
@@ -109,21 +117,6 @@
       padding-left: 0.5rem;
     }
 
-    .card-item {
-      width: 200px;
-      background-color: white;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-      margin-bottom: 1rem;
-      position: relative;
-    }
-
-    .card-image {
-      width: 100%;
-      height: 300px;
-      object-fit: cover;
-    }
 
     .card-info {
       padding: 0rem;
@@ -172,17 +165,69 @@
       font-weight: bold;
     }
 
-    .add-to-cart {
-      background-color: #3498db;
-      color: white;
-      border: none;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
+    .add-to-cart-btn {
+	  position: absolute; /* Positionner le bouton sur l'image */
+	  top: 220px; /* Ajuste la distance du haut */
+	  right: 10px; /* Ajuste la distance de la droite */
+	  width: 30px;
+	  height: 30px;
+	  font-size: 1.3rem;
+	  border-radius: 50%;
+	  display: flex;
+	  justify-content: center;
+	  align-items: center;
+	  cursor: pointer;
+	  transition: background-color 0.3s, transform 0.3s;
+	}
 
     .add-to-cart:hover {
       background-color: #2980b9;
+    }	
+	
+    .card-item {
+	  position: relative; /* Permet de positionner les éléments enfants en absolu */  
+      width: 200px;
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      margin-bottom: 1rem;
+      position: relative;
     }
+
+    .card-image {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+	
+	.btn-plus, .btn-minus {
+	  width: 50px; /* Largeur du bouton */
+	  height: 50px; /* Hauteur du bouton */
+	  font-size: 1.5rem; /* Taille de l'icône */
+	  color: white;
+	  border: none;
+	  cursor: pointer;
+	  border-radius: 50%; /* Rendre le bouton circulaire */
+	  display: flex;
+	  justify-content: center;
+	  align-items: center;
+	  transition: background-color 0.3s, transform 0.3s;
+	}
+
+	.btn-plus:hover, .btn-minus:hover {
+	  transform: scale(1.1); /* Agrandir légèrement au survol */
+	}
+
+	/* Bouton vert pour ajouter */
+	.btn-plus {
+	  background-color: green;
+	}
+
+	/* Bouton bleu pour retirer */
+	.btn-minus {
+	  background-color: #3498db; /* Bleu plus clair */
+	}
 
     .cart-sidebar {
       position: fixed;
@@ -249,6 +294,7 @@
 </head>
 <body>
   <div id="app">
+  <div class="wrapper">
     <div class="container">
       <header class="header">
         <div class="logo">TCG Marketplace</div>
@@ -308,11 +354,18 @@
         <div class="card-grid">
           <div v-for="card in displayedCards" :key="card.id" class="card-item">
             <img :src="card.image_url" :alt="card.image_url" class="card-image">
-            <img 
-              :src="isInCart(card) ? 'moins.png' : 'plus.png'" 
-              @click="toggleCartItem(card)" 
-              alt="Ajouter ou Retirer" 
-              class="cart-icon-img">
+			
+            <!-- Remplacement de l'image par des icônes Font Awesome -->
+            <button 
+			  class="add-to-cart-btn" 
+			  @click="toggleCartItem(card)"
+			  :class="isInCart(card) ? 'btn-minus' : 'btn-plus'"
+			>
+			  <i v-if="isInCart(card)" class="fas fa-minus"></i>
+			  <i v-else class="fas fa-plus"></i>
+			</button>
+
+			
             <div class="card-info">
               <div class="card-details">
                 <div class="card-name">{{ card.name }}</div>
@@ -355,6 +408,7 @@
         </div>
       </div>
     </div>
+	</div>
   </div>
 
   <script>
