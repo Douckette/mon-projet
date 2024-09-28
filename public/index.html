@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-	<!-- Google tag (gtag.js) -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-6NEMDCQZGM"></script>
-	<script>
-	  window.dataLayer = window.dataLayer || [];
-	  function gtag(){dataLayer.push(arguments);}
-	  gtag('js', new Date());
-
-	  gtag('config', 'G-6NEMDCQZGM');
-	</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TCG Marketplace - Your Ultimate Trading Card Store</title>
@@ -460,7 +451,7 @@
         async fetchCards() {
           try {
             this.loading = true;
-            const response = await axios.get(' https://cb01-85-190-234-244.ngrok-free.app/api/stockbrut', {
+            const response = await axios.get('http://localhost:3000/api/stockbrut', {
 				headers: {
 				  'ngrok-skip-browser-warning': 'true'  // Ajout de l'en-tête pour contourner la page d'avertissement
 				}
@@ -570,7 +561,7 @@
 
     const cartItems = this.cart;
 
-    axios.post(' https://cb01-85-190-234-244.ngrok-free.app/api/order', { cart: cartItems })
+    axios.post('http://localhost:3000/api/order', { cart: cartItems })
       .then(response => {
         console.log('Commande enregistrée avec succès :', response);
         
