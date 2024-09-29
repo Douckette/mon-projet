@@ -365,7 +365,7 @@
       <div class="main-content">
         <div class="card-grid">
           <div v-for="card in displayedCards" :key="card.id" class="card-item">
-            <img :src="`${baseUrl}${card.image_url}`" @error="onImageError($event)" class="card-image">
+            <img :src="`${baseUrl}${card.image_url}`" @error="onImageError($event)" class="card-image" loading="lazy">
 			
             <!-- Remplacement de l'image par des icônes Font Awesome -->
             <button 
