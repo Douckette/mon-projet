@@ -118,7 +118,7 @@
     }
 
     /* Media query pour les petits écrans (mobiles) */
-    @media (max-width: 600px) {
+    /*@media (max-width: 600px) {
       .card-grid {
         grid-template-columns: repeat(2, 1fr); 
       }
@@ -126,7 +126,7 @@
       .card-item {
         width: 50%; 
       }
-    }
+    }*/
 
     .card-info {
       padding: 0rem;
@@ -366,7 +366,7 @@
       <div class="main-content">
         <div class="card-grid">
           <div v-for="card in displayedCards" :key="card.id" class="card-item">
-            <img :src="card.image_url" @error="onImageError($event)" class="card-image">
+            <img :src="card.image_url" :alt="card.image_url" class="card-image">
 			
             <!-- Remplacement de l'image par des icônes Font Awesome -->
             <button 
@@ -463,10 +463,10 @@
         }
       },
       methods: {
-        onImageError(event) {
+        /*onImageError(event) {
         // Remplacer l'image manquante par l'image "Rupture de stock" stockée localement
         event.target.src = `${this.baseUrl}/images/oos.png`; // Le chemin relatif à l'image de rupture de stock
-      },
+      },*/
         async fetchCards() {
           try {
             this.loading = true;
@@ -502,13 +502,14 @@
 
 		  // Vérifier si la recherche correspond au nom de la carte
 		  if (this.filters.search && !normalizedCardName.includes(normalizedSearch)) return false;
-
+      
+      /*
       const cardSerial = card.serial ? this.removeAccents(card.serial.toLowerCase()) : '';
-    const serialSearchQuery = this.filters.serialSearch ? this.removeAccents(this.filters.serialSearch.toLowerCase()) : '';
+      const serialSearchQuery = this.filters.serialSearch ? this.removeAccents(this.filters.serialSearch.toLowerCase()) : '';
 
-    // Recherche par numéro de série, seulement si le champ est défini
-    if (this.filters.serialSearch && !cardSerial.includes(serialSearchQuery)) return false;
-
+      // Recherche par numéro de série, seulement si le champ est défini
+      if (this.filters.serialSearch && !cardSerial.includes(serialSearchQuery)) return false;
+        */
 
 
 		  if (this.filters.minPrice && card.price < this.filters.minPrice) return false;
