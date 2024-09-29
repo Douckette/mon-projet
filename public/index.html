@@ -521,11 +521,24 @@
           const start = (this.page - 1) * this.pageSize;
           const end = this.page * this.pageSize;
           const moreCards = this.filteredCards.slice(start, end);
+
+          // Ajouter une condition pour vérifier si d'autres cartes doivent être chargées
+          if (moreCards.length > 0) {
+            this.displayedCards = [...this.displayedCards, ...moreCards];
+          }
+
+          // Si toutes les cartes ont été chargées, désactiver le chargement supplémentaire
+          if (this.displayedCards.length >= this.filteredCards.length) {
+            window.removeEventListener('scroll', this.handleScroll); // Arrêter d'écouter l'événement scroll
+          }
+
+          /*
           if (this.page === 1) {
             this.displayedCards = moreCards; // Reset the displayed cards when applying filters
           } else {
             this.displayedCards = [...this.displayedCards, ...moreCards]; // Add to existing displayed cards
-          }
+          }*/
+
         },
         handleScroll() {
           const bottomOfWindow = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight;
