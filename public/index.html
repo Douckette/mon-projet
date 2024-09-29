@@ -110,13 +110,23 @@
     }
 
     .card-grid {
-      flex-grow: 1;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1rem;
-      padding-left: 0.5rem;
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* 200px est la taille minimum */
+    gap: 1rem;
+    padding-left: 0.5rem;
     }
 
+    /* Media query pour les petits écrans (mobiles) */
+    /*@media (max-width: 600px) {
+      .card-grid {
+        grid-template-columns: repeat(2, 1fr); 
+      }
+
+      .card-item {
+        width: 50%; 
+      }
+    }*/
 
     .card-info {
       padding: 0rem;
@@ -129,24 +139,24 @@
     }
 
     .card-name {
-      background-color: #001f3f;
-      color: white;
+      background-color: #fff; /* Fond blanc */
+      color: #808080; /* Texte gris */
       font-size: 0.8rem;
       padding: 0.3rem;
       text-align: left;
     }
 
     .card-serial {
-      background-color: #0074D9;
-      color: white;
+      background-color: #fff; /* Fond blanc */
+      color: #808080; /* Texte gris */
       font-size: 0.8rem;
       padding: 0.3rem;
       text-align: left;
     }
 
     .card-condition {
-      background-color: #39CCCC;
-      color: white;
+      background-color: #fff; /* Fond blanc */
+     color: #808080; /* Texte gris */
       font-size: 0.8rem;
       padding: 0.3rem;
       text-align: left;
@@ -161,7 +171,7 @@
 
     .card-price {
       font-size: 1rem;
-      color: #e74c3c;
+      color: #3498db; /* Texte bleu */
       font-weight: bold;
     }
 
@@ -300,6 +310,9 @@
         <div class="logo">TCG Marketplace</div>
         <div class="search-bar">
           <input type="text" v-model="filters.search" @input="applyFilters" placeholder="Card name...">
+          <!-- Nouvelle barre de recherche pour le numéro de série -->
+          <input type="text" v-model="filters.serialSearch" @input="applyFilters" placeholder="Card edition (DDJ, DDK)...">
+
         </div>
         <div class="cart-icon" @click="toggleCart">🛒 {{ cartItemCount }}</div>
       </header>
@@ -415,6 +428,8 @@
     new Vue({
       el: '#app',
       data: {
+        //baseUrl: 'http://localhost:3000', // Stockage de l'URL dans `data`
+        baseUrl: 'https://7f7c-91-205-106-148.ngrok-free.app', // Stockage de l'URL dans `data`
         cards: [],
         filteredCards: [],
         displayedCards: [],
@@ -448,16 +463,22 @@
         }
       },
       methods: {
+        /*onImageError(event) {
+        // Remplacer l'image manquante par l'image "Rupture de stock" stockée localement
+        event.target.src = `${this.baseUrl}/images/oos.png`; // Le chemin relatif à l'image de rupture de stock
+      },*/
         async fetchCards() {
           try {
             this.loading = true;
-            const response = await axios.get('http://localhost:3000/api/stockbrut', {
+            
+            const response = await axios.get(`${this.baseUrl}/api/stockbrut`, {
 				headers: {
 				  'ngrok-skip-browser-warning': 'true'  // Ajout de l'en-tête pour contourner la page d'avertissement
 				}
 			  }				
 			);
             this.cards = response.data;
+            console.log("Cartes récupérées:", this.cards); // Ajoutez ceci pour voir les cartes récupérées
             this.applyFilters();
             this.loading = false;
           } catch (error) {
@@ -481,6 +502,15 @@
 
 		  // Vérifier si la recherche correspond au nom de la carte
 		  if (this.filters.search && !normalizedCardName.includes(normalizedSearch)) return false;
+      
+      /*
+      const cardSerial = card.serial ? this.removeAccents(card.serial.toLowerCase()) : '';
+      const serialSearchQuery = this.filters.serialSearch ? this.removeAccents(this.filters.serialSearch.toLowerCase()) : '';
+
+      // Recherche par numéro de série, seulement si le champ est défini
+      if (this.filters.serialSearch && !cardSerial.includes(serialSearchQuery)) return false;
+        */
+
 
 		  if (this.filters.minPrice && card.price < this.filters.minPrice) return false;
 		  if (this.filters.maxPrice && card.price > this.filters.maxPrice) return false;
@@ -561,7 +591,7 @@
 
     const cartItems = this.cart;
 
-    axios.post('http://localhost:3000/api/order', { cart: cartItems })
+    axios.post(`${this.baseUrl}/api/order`, { cart: cartItems })
       .then(response => {
         console.log('Commande enregistrée avec succès :', response);
         
