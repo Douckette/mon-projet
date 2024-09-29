@@ -366,7 +366,7 @@
       <div class="main-content">
         <div class="card-grid">
           <div v-for="card in displayedCards" :key="card.id" class="card-item">
-            <img :src="card.image_url" :alt="card.image_url" class="card-image">
+            <img :src="`${baseUrl}${card.image_url}`" class="card-image">
 			
             <!-- Remplacement de l'image par des icônes Font Awesome -->
             <button 
@@ -469,8 +469,7 @@
       },*/
         async fetchCards() {
           try {
-            this.loading = true;
-            
+            this.loading = true;            
             const response = await axios.get(`${this.baseUrl}/api/stockbrut`, {
 				headers: {
 				  'ngrok-skip-browser-warning': 'true'  // Ajout de l'en-tête pour contourner la page d'avertissement
